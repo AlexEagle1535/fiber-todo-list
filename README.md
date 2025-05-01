@@ -33,26 +33,19 @@ REST API-сервис для управления задачами (TODO-лис�
 
 ## 🚀 Запуск проекта локально (без Docker)
 
-1. Клонируйте репозиторий:
-
-```bash
-git clone <your-repo-url>
-cd <project-directory>
-```
-
-2. Создайте `.env` файл в корне проекта со следующим содержимым:
+1. Создайте `.env` файл в корне проекта со следующим содержимым:
 
 ```env
 DATABASE_URL="postgres://user:password@localhost:5432/todo-list"
 ```
 
-3. Запустите приложение:
+2. Запустите приложение:
 
 ```bash
 go run main.go
 ```
 
-4. Перейдите в браузере или через Postman:
+3. Перейдите в браузере или через Postman:
 
 ```
 http://localhost:3000/tasks
