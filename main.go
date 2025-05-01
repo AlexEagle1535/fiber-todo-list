@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
 
 	"github.com/AlexEagle1535/fiber-todo-list/db"
@@ -14,9 +15,11 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Println("No .env file found, using default values")
 	}
-	app := fiber.New()
-	conn := db.Run()
+	migrate := flag.Bool("migrate", false, "Run database migrations")
+	flag.Parse()
+	conn := db.Run(*migrate)
 	defer conn.Close(context.Background())
+	app := fiber.New()
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
 	})
