@@ -1,21 +1,26 @@
 package main
 
 import (
+	"context"
 	"log"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/AlexEagle1535/fiber-todo-list/db"
+	"github.com/AlexEagle1535/fiber-todo-list/router"
+	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	// Initialize a new Fiber app
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using default values")
+	}
 	app := fiber.New()
-
-	// Define a route for the GET method on the root path '/'
-	app.Get("/", func(c fiber.Ctx) error {
-		// Send a string response to the client
+	conn := db.Run()
+	defer conn.Close(context.Background())
+	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
 	})
-
+	router.Run(app, conn)
 	// Start the server on port 3000
 	log.Fatal(app.Listen(":3000"))
 }
